@@ -1,0 +1,106 @@
+/* version 1 */
+#include<iostream>
+#include<string.h>
+ 
+using namespace std;
+ char keygeneration(){ 
+     int i,j;
+     for(i = 0, j = 0; i < msgLen; ++i, ++j){
+        if(j == keyLen)
+            j = 0;
+ 
+        newKey[i] = key[j];
+    }
+ 
+    newKey[i] = '\0';
+ 
+     
+ };
+ char encryption(){
+     for(i = 0; i < msgLen; ++i)
+        encryptedMsg[i] = ((msg[i] + newKey[i]) % 26) + 'A';
+ 
+    encryptedMsg[i] = '\0';
+ };
+ char decryption(){
+     //decryption
+    for(i = 0; i < msgLen; ++i)
+        decryptedMsg[i] = (((encryptedMsg[i] - newKey[i]) + 26) % 26) + 'A';
+ 
+    decryptedMsg[i] = '\0';
+ 
+ };
+int main(){
+    char msg[] = "varendra";
+    char key[] = "cse";
+    int msgLen = strlen(msg), keyLen = strlen(key);
+ 
+    char newKey[msgLen], encryptedMsg[msgLen], decryptedMsg[msgLen];
+    cout<<"Original Message: "<<msg;
+    cout<<"\nKey: "<<key;
+    cout<<"\nNew Generated Key: "<<keygeneration();
+    cout<<"\nEncrypted Message: "<<encryption();
+    cout<<"\nDecrypted Message: "<<decryption();
+ 
+return 0;
+}
+
+//version 2
+#include<bits/stdc++.h>
+using namespace std;
+ 
+string generateKey(string msg, string key)
+{
+    int x = msg.size();
+    int y=key.size();
+ 
+    for (int i = 0;x<=y ; i++)
+    {
+        if (x == i)
+            i = 0;
+        if (y == x)
+            break;
+        key.push_back(key[i]);
+    }
+    return key;
+}
+string encryption(string str, string key)
+{
+    string cipher_text;
+ 
+    for (int i = 0; i < str.size(); i++)
+    {
+        char x = (str[i] + key[i]) %26 +'A';
+        cipher_text.push_back(x);
+    }
+    return cipher_text;
+}
+string decryption(string cipher_text, string key)
+{
+    string orig_text;
+ 
+    for (int i = 0 ; i < cipher_text.size(); i++)
+    {
+        // converting in range 0-25
+        char x = (cipher_text[i] - key[i] + 26) %26+'A';
+ 
+    
+        orig_text.push_back(x);
+    }
+    return orig_text;
+}
+int main()
+{
+    string msg = "varendra";
+    string keyword = "cse";
+ 
+    string key = generateKey(msg, keyword);
+    string cipher_text = encryption(msg, key);
+ 
+    cout << "Ciphertext : "
+         << cipher_text << "\n";
+ 
+    cout << "Original/Decrypted Text : "
+         << decryption(cipher_text, key);
+    return 0;
+}
